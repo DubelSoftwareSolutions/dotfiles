@@ -1,0 +1,39 @@
+add_newline = true
+
+# Defines the exact order of the prompt, removing the default connective words
+format = '$directory$git_branch${custom.ros2}$cmake$python$line_break$character'
+
+[directory]
+style = "bold cyan"
+format = '[$path]($style) '
+truncate_to_repo = true # Keeps the path short by stopping at the git root
+
+[git_branch]
+symbol = "🌿 "
+format = '[$symbol$branch]($style) '
+
+[custom.ros2]
+when = 'test -n "$COLCON_PREFIX_PATH"'
+command = 'echo $ROS_DISTRO'
+symbol = "🐢 "
+format = '[$symbol$output]($style) '
+style = "bold blue"
+
+[cmake]
+symbol = "⚙️ "
+format = '[$symbol]($style) '
+detect_files = ["CMakeLists.txt", "CMakeCache.txt", "colcon.meta"]
+
+[python]
+symbol = "🐍 "
+format = '[$symbol$virtualenv]($style) '
+detect_extensions = []
+detect_files = ["setup.py", "pyproject.toml", "requirements.txt", "setup.cfg", "Pipfile"]
+detect_folders = []
+
+[gcloud]
+disabled = true
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[✗](bold red)"
