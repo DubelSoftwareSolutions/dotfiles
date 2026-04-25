@@ -13,6 +13,7 @@ export ROS_DOMAIN_ID=21
 
 # Add ROS_WS directory env variable
 export ROS_WS="$HOME/workspaces/ros_ws"
+export DEVCONTAINER_PATH="$ROS_WS/src/robotic-platform-ros2"
 
 # ==========================================
 # 2. MODERN TOOL REPLACEMENTS
@@ -35,6 +36,8 @@ alias ssh='kitten ssh'
 alias icat='kitty +kitten icat'
 alias 'tpdf'='timg --grid=1x1 --title'
 alias 'tvid'='timg --loops=1'
+
+alias rp='kitty --session ~/.config/kitty/rp_session.conf'
 
 # ==========================================
 # 3. ZSH BEHAVIOR & HISTORY
@@ -171,18 +174,16 @@ r2plot() {
 # ==========================================
 # 10. DOCKER / DEVCONTAINER INTEGRATION
 # ==========================================
-# Fuzzy find a running container and attach a Kitty shell to it
-djump() {
-  local container
-  # Pop up an FZF menu of currently running Docker containers
-  container=$(docker ps --format "{{.Names}} ({{.Image}})" | fzf --prompt="Jump to Container> " --height=40% --layout=reverse | awk '{print $1}')
-  
-  if [[ -n "$container" ]]; then
-    echo "Attaching Kitty to $container..."
-    # Fallback to xterm-256color just in case kitty-terminfo isn't installed in the container
-    docker exec -it -e TERM=xterm-256color "$container" /bin/zsh || docker exec -it -e TERM=xterm-256color "$container" /bin/bash
-  fi
-}
+# Smart Devcontainer CLI wrapper
+alias dcup='devcontainer up \
+  --workspace-folder "$DEVCONTAINER_PATH" \
+  --dotfiles-repository "https://github.com/DubelSoftwareSolutions/dotfiles" \
+  --dotfiles-install-command "install.sh"'
+alias dcre='dcup --remove-existing-container'
+alias dcin='devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" zsh -il'
+alias dcrun='devcontainer exec --workspace-folder "$DEVCONTAINER_PATH"'
+alias dcinw='echo -n "⏳ Waiting for container"; while ! dcrun true &> /dev/null; do echo -n "."; sleep 2; done; echo -e "\n✅ Ready!"; dcin'
+alias dcrunw='echo -n "⏳ Waiting for container"; while ! dcrun true &> /dev/null; do echo -n "."; sleep 2; done; echo -e "\n✅ Ready!"; dcrun'
 
 alias gcloud_vpn='gcloud compute ssh instance-20260308-201926 --zone=europe-central2-c --project=gd-gcp-rnd-robotics'
 alias tailscale_up='sudo tailscale up --login-server http://127.0.0.1:18080'
