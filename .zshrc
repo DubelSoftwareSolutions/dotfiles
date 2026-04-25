@@ -11,6 +11,9 @@ export RCUTILS_COLORIZED_OUTPUT=1
 # Prevent ROS2 traffic leakage on shared networks (Change this per robot)
 export ROS_DOMAIN_ID=21
 
+# Add ROS_WS directory env variable
+export ROS_WS="$HOME/workspaces/ros_ws"
+
 # ==========================================
 # 2. MODERN TOOL REPLACEMENTS
 # ==========================================
@@ -134,6 +137,29 @@ bindkey '^[OB' history-beginning-search-forward
 bindkey -M vicmd 'k' history-beginning-search-backward
 bindkey -M vicmd 'j' history-beginning-search-forward
 
+# Restore Ctrl+Left and Ctrl+Right word jumping in Vi insert mode
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
+# Delete previous word (Ctrl+Backspace) / next word (Ctrl+Delete)
+bindkey '^H' backward-kill-word
+bindkey '^[[3;5~' kill-word
+
+# ==========================================
+# 9. ROS2 REAL-TIME PLOTTING
+# ==========================================
+# Usage: r2plot /topic_name field_name
+# Example: r2plot /odom twist.twist.linear.x
+r2plot() {
+  if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "Usage: r2plot <topic> <field_path>"
+    return 1
+  fi
+  echo "Plotting $1 -> $2... (Press Ctrl+C to stop)"
+  # Echo the topic, grep the specific field, extract the number, and pipe to ttyplot
+  ros2 topic echo "$1" | stdbuf -oL grep "^$2:" | stdbuf -oL awk '{print $2}' | ttyplot -s 100 -t "$1 ($2)"
+}
+
 # ==========================================
 # 10. DOCKER / DEVCONTAINER INTEGRATION
 # ==========================================
@@ -150,3 +176,5 @@ djump() {
   fi
 }
 
+gcloud compute ssh instance-20260308-201926 --zone=europe-central2-c --project=gd-gcp-rnd-robotics
+sudo tailscale up --login-server http://127.0.0.1:18080
