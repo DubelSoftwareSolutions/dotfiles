@@ -53,7 +53,7 @@ eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 
 # Source FZF (adjust path if installed via git rather than apt)
---- FZF Bindings ---
+# --- FZF Bindings ---
 if [ -f "$HOME/.zsh/fzf/key-bindings.zsh" ]; then
     source "$HOME/.zsh/fzf/key-bindings.zsh"
     source "$HOME/.zsh/fzf/completion.zsh"
