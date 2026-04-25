@@ -53,8 +53,11 @@ eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 
 # Source FZF (adjust path if installed via git rather than apt)
-source /usr/share/doc/fzf/examples/key-bindings.zsh
-source /usr/share/doc/fzf/examples/completion.zsh
+--- FZF Bindings ---
+if [ -f "$HOME/.zsh/fzf/key-bindings.zsh" ]; then
+    source "$HOME/.zsh/fzf/key-bindings.zsh"
+    source "$HOME/.zsh/fzf/completion.zsh"
+fi
 
 # ==========================================
 # 5. ROS2 & COLCON ALIASES
@@ -90,8 +93,13 @@ alias r2s='ros2source'
 # ==========================================
 # 6. ZSH PLUGINS
 # ==========================================
-source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# --- Zsh Plugins ---
+if [ -f "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
+    source "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+if [ -f "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
+    source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
 
 # Make autosuggestions use a subtle gray color
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
@@ -176,5 +184,5 @@ djump() {
   fi
 }
 
-gcloud compute ssh instance-20260308-201926 --zone=europe-central2-c --project=gd-gcp-rnd-robotics
-sudo tailscale up --login-server http://127.0.0.1:18080
+alias gcloud_vpn='gcloud compute ssh instance-20260308-201926 --zone=europe-central2-c --project=gd-gcp-rnd-robotics'
+alias tailscale_up='sudo tailscale up --login-server http://127.0.0.1:18080'

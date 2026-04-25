@@ -28,7 +28,7 @@ detect_files = ["CMakeLists.txt", "CMakeCache.txt", "colcon.meta"]
 symbol = "🐍 "
 format = '[$symbol$virtualenv]($style) '
 detect_extensions = []
-detect_files = ["setup.py", "pyproject.toml", "requirements.txt", "setup.cfg", "Pipfile"]
+detect_files = ["setup.py", "pyproject.toml", "requirements.txt", "setup.cfg"]
 detect_folders = []
 
 [gcloud]
