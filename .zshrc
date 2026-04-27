@@ -209,34 +209,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
-
-
-# ==========================================
-# Persistent SSH Agent Setup
-# ==========================================
-export SSH_ENV="$HOME/.ssh/agent-environment"
-
-function start_agent {
-    echo "Initializing new SSH agent..."
-    # Start the agent and save the environment variables to a file
-    ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
-    chmod 600 "$SSH_ENV"
-    source "$SSH_ENV" > /dev/null
-    
-    # Load your keys (Add any other keys you need here)
-    ssh-add ~/.ssh/id_rsa 2>/dev/null
-    ssh-add ~/.ssh/id_ed25519 2>/dev/null
-}
-
-# Check if the environment file exists
-if [ -f "$SSH_ENV" ]; then
-    source "$SSH_ENV" > /dev/null
-    # Test if the agent is actually responding
-    if ! ssh-add -l > /dev/null 2>&1; then
-        start_agent
-    fi
-else
-    start_agent
-fi
-
