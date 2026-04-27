@@ -1,4 +1,3 @@
--- ~/dotfiles/nvim/lua/config/lazy.lua
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
@@ -7,14 +6,18 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
   spec = {
+    -- Core
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- Import official language support extensions:
+
+    -- Languages
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.cmake" },
-    -- Import official AI support extensions:
+
+    -- AI
     { import = "lazyvim.plugins.extras.ai.copilot" },
-    -- Import custom plugins
+
+    -- Local plugins
     { import = "plugins" },
   },
 })

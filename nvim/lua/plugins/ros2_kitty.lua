@@ -1,15 +1,14 @@
--- ~/dotfiles/nvim/lua/plugins/ros2_kitty.lua
 return {
-  -- Seamless navigation between Kitty and Neovim splits
   {
     "knubie/vim-kitty-navigator",
     keys = {
-      { "<C-h>", "<Cmd>KittyNavigateLeft<CR>", mode = {"n", "v", "i"}, desc = "Navigate Left" },
-      { "<C-j>", "<Cmd>KittyNavigateDown<CR>", mode = {"n", "v", "i"}, desc = "Navigate Down" },
-      { "<C-k>", "<Cmd>KittyNavigateUp<CR>", mode = {"n", "v", "i"}, desc = "Navigate Up" },
-      { "<C-l>", "<Cmd>KittyNavigateRight<CR>", mode = {"n", "v", "i"}, desc = "Navigate Right" },
-    }
-  },  
+      { "<C-h>", "<Cmd>KittyNavigateLeft<CR>", mode = { "n", "v", "i" }, desc = "Navigate left" },
+      { "<C-j>", "<Cmd>KittyNavigateDown<CR>", mode = { "n", "v", "i" }, desc = "Navigate down" },
+      { "<C-k>", "<Cmd>KittyNavigateUp<CR>", mode = { "n", "v", "i" }, desc = "Navigate up" },
+      { "<C-l>", "<Cmd>KittyNavigateRight<CR>", mode = { "n", "v", "i" }, desc = "Navigate right" },
+    },
+  },
+
   {
     "ErickKramer/nvim-ros2",
     dependencies = {
@@ -18,7 +17,6 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     opts = {
-      -- picker = "telescope", -- Default
       autocmds = true,
       treesitter = true,
     },
