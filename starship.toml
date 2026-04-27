@@ -4,7 +4,6 @@ add_newline = true
 format = """
 ${custom.host}\
 ${custom.docker}\
-${custom.devcontainer}\
 $directory\
 $git_branch\
 ${custom.ros2}\
@@ -13,22 +12,16 @@ $python\
 $line_break\
 $character"""
 
-[custom.devcontainer]
-description = "Indicator for VS Code/CLI Devcontainers"
-when = 'test "$DEVCONTAINER" = "true" || test -n "$REMOTE_CONTAINERS"'
-format = '[💻 $output]($style) '
-style = "bold cyan"
-
 [custom.docker]
 description = "Indicator for Raw Docker Containers"
-when = 'test -f /.dockerenv && test "$DEVCONTAINER" != "true" && test -z "$REMOTE_CONTAINERS"'
-format = '[🐳 $output]($style) '
+when = 'test -f /.dockerenv'
+format = '[🐳]($style) '
 style = "bold blue"
 
 [custom.host]
 description = "Indicator for Host Machine"
 when = 'test ! -f /.dockerenv'
-format = '[🏠 $output]($style) '
+format = '[🏠]($style) '
 style = "bold brown"
 
 [directory]
