@@ -12,8 +12,9 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.clangd" },
     { import = "lazyvim.plugins.extras.lang.python" },
     { import = "lazyvim.plugins.extras.lang.cmake" },
+    -- Import official AI support extensions:
+    { import = "lazyvim.plugins.extras.ai.copilot" },
     -- Import custom plugins
     { import = "plugins" },
   },
 })
-

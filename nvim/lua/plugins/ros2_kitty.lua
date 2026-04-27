@@ -9,8 +9,7 @@ return {
       { "<C-k>", "<Cmd>KittyNavigateUp<CR>", mode = {"n", "v", "i"}, desc = "Navigate Up" },
       { "<C-l>", "<Cmd>KittyNavigateRight<CR>", mode = {"n", "v", "i"}, desc = "Navigate Right" },
     }
-  },
-  
+  },  
   {
     "ErickKramer/nvim-ros2",
     dependencies = {

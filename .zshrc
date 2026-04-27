@@ -180,10 +180,63 @@ alias dcup='devcontainer up \
   --dotfiles-repository "https://github.com/DubelSoftwareSolutions/dotfiles" \
   --dotfiles-install-command "install.sh"'
 alias dcre='dcup --remove-existing-container'
-alias dcin='devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" zsh -il'
+
+dcin() {
+  if [ $# -eq 0 ]; then
+    devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" zsh -il
+  else
+    devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" zsh -i -c "direnv exec . $* ; exec zsh -il"
+  fi
+}
+
+dcinw() {
+  echo -n "⏳ Waiting for container"
+  while ! devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" true &> /dev/null; do
+    echo -n "."
+    sleep 2
+  done
+  echo -e "\n✅ Ready!"
+  dcin "$@"
+}
+
 alias dcrun='devcontainer exec --workspace-folder "$DEVCONTAINER_PATH"'
-alias dcinw='echo -n "⏳ Waiting for container"; while ! dcrun true &> /dev/null; do echo -n "."; sleep 2; done; echo -e "\n✅ Ready!"; dcin'
 alias dcrunw='echo -n "⏳ Waiting for container"; while ! dcrun true &> /dev/null; do echo -n "."; sleep 2; done; echo -e "\n✅ Ready!"; dcrun'
 
 alias gcloud_vpn='gcloud compute ssh instance-20260308-201926 --zone=europe-central2-c --project=gd-gcp-rnd-robotics'
 alias tailscale_up='sudo tailscale up --login-server http://127.0.0.1:18080'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+
+
+# ==========================================
+# Persistent SSH Agent Setup
+# ==========================================
+export SSH_ENV="$HOME/.ssh/agent-environment"
+
+function start_agent {
+    echo "Initializing new SSH agent..."
+    # Start the agent and save the environment variables to a file
+    ssh-agent | sed 's/^echo/#echo/' > "$SSH_ENV"
+    chmod 600 "$SSH_ENV"
+    source "$SSH_ENV" > /dev/null
+    
+    # Load your keys (Add any other keys you need here)
+    ssh-add ~/.ssh/id_rsa 2>/dev/null
+    ssh-add ~/.ssh/id_ed25519 2>/dev/null
+}
+
+# Check if the environment file exists
+if [ -f "$SSH_ENV" ]; then
+    source "$SSH_ENV" > /dev/null
+    # Test if the agent is actually responding
+    if ! ssh-add -l > /dev/null 2>&1; then
+        start_agent
+    fi
+else
+    start_agent
+fi
+
