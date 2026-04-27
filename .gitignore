@@ -1,0 +1,38 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# Logs and local environment
+*.log
+.env
+.env.*
+!.env.example
+.direnv/
+
+# Shell local state
+.zcompdump*
+.zsh_history
+.zsh_sessions/
+
+# Neovim local files
+.nvimlog
+.netrwhist
+nvim/.lazy.lua
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Build outputs
+build/
+install/
+log/

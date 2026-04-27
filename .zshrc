@@ -20,17 +20,36 @@ compinit
 autoload -Uz bashcompinit
 bashcompinit
 
-eval "$(register-python-argcomplete ros2)"
-eval "$(register-python-argcomplete colcon)"
+if command -v register-python-argcomplete >/dev/null 2>&1; then
+    if command -v ros2 >/dev/null 2>&1; then
+        eval "$(register-python-argcomplete ros2)"
+    fi
+    if command -v colcon >/dev/null 2>&1; then
+        eval "$(register-python-argcomplete colcon)"
+    fi
+fi
 
 zstyle ':completion:*' menu select
 
 # Tool initialization
-eval "$(zoxide init zsh)"
-eval "$(direnv hook zsh)"
-eval "$(starship init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
 
-if [[ -f "$HOME/.zsh/fzf/key-bindings.zsh" ]]; then
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+if command -v fzf >/dev/null 2>&1 && fzf --zsh >/dev/null 2>&1; then
+    source <(fzf --zsh)
+elif [[ -f "$HOME/.zsh/fzf/shell/key-bindings.zsh" ]]; then
+    source "$HOME/.zsh/fzf/shell/key-bindings.zsh"
+    source "$HOME/.zsh/fzf/shell/completion.zsh"
+elif [[ -f "$HOME/.zsh/fzf/key-bindings.zsh" ]]; then
     source "$HOME/.zsh/fzf/key-bindings.zsh"
     source "$HOME/.zsh/fzf/completion.zsh"
 fi
