@@ -1,6 +1,5 @@
 add_newline = true
 
-# Defines the exact order of the prompt, removing the default connective words
 format = """
 ${custom.host}\
 ${custom.docker}\
@@ -12,33 +11,14 @@ $python\
 $line_break\
 $character"""
 
-[custom.docker]
-description = "Indicator for Raw Docker Containers"
-when = 'test -f /.dockerenv'
-format = '[🐳]($style) '
-style = "bold blue"
-
-[custom.host]
-description = "Indicator for Host Machine"
-when = 'test ! -f /.dockerenv'
-format = '[🏠]($style) '
-style = "bold brown"
-
 [directory]
 style = "bold cyan"
 format = '[$path]($style) '
-truncate_to_repo = true # Keeps the path short by stopping at the git root
+truncate_to_repo = true
 
 [git_branch]
 symbol = "🌿 "
 format = '[$symbol$branch]($style) '
-
-[custom.ros2]
-when = 'test -n "$COLCON_PREFIX_PATH"'
-command = 'echo $ROS_DISTRO'
-symbol = "🐢 "
-format = '[$symbol$output]($style) '
-style = "bold blue"
 
 [cmake]
 symbol = "⚙️ "
@@ -58,3 +38,22 @@ disabled = true
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[✗](bold red)"
+
+[custom.docker]
+description = "Indicator for Raw Docker Containers"
+when = 'test -f /.dockerenv'
+format = '[🐳]($style) '
+style = "bold blue"
+
+[custom.host]
+description = "Indicator for Host Machine"
+when = 'test ! -f /.dockerenv'
+format = '[🏠]($style) '
+style = "bold brown"
+
+[custom.ros2]
+when = 'test -n "$COLCON_PREFIX_PATH"'
+command = 'echo $ROS_DISTRO'
+symbol = "🐢 "
+format = '[$symbol$output]($style) '
+style = "bold blue"
