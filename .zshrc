@@ -11,10 +11,6 @@ export RCUTILS_COLORIZED_OUTPUT=1
 # Prevent ROS2 traffic leakage on shared networks (Change this per robot)
 export ROS_DOMAIN_ID=21
 
-# Add ROS_WS directory env variable
-export ROS_WS="$HOME/workspaces/ros_ws"
-export DEVCONTAINER_PATH="$ROS_WS/src/robotic-platform-ros2"
-
 # ==========================================
 # 2. MODERN TOOL REPLACEMENTS
 # ==========================================
@@ -155,57 +151,4 @@ bindkey '^[[1;5C' forward-word
 # Delete previous word (Ctrl+Backspace) / next word (Ctrl+Delete)
 bindkey '^H' backward-kill-word
 bindkey '^[[3;5~' kill-word
-
-# ==========================================
-# 9. ROS2 REAL-TIME PLOTTING
-# ==========================================
-# Usage: r2plot /topic_name field_name
-# Example: r2plot /odom twist.twist.linear.x
-r2plot() {
-  if [ -z "$1" ] || [ -z "$2" ]; then
-    echo "Usage: r2plot <topic> <field_path>"
-    return 1
-  fi
-  echo "Plotting $1 -> $2... (Press Ctrl+C to stop)"
-  # Echo the topic, grep the specific field, extract the number, and pipe to ttyplot
-  ros2 topic echo "$1" | stdbuf -oL grep "^$2:" | stdbuf -oL awk '{print $2}' | ttyplot -s 100 -t "$1 ($2)"
-}
-
-# ==========================================
-# 10. DOCKER / DEVCONTAINER INTEGRATION
-# ==========================================
-# Smart Devcontainer CLI wrapper
-alias dcup='devcontainer up \
-  --workspace-folder "$DEVCONTAINER_PATH" \
-  --dotfiles-repository "https://github.com/DubelSoftwareSolutions/dotfiles" \
-  --dotfiles-install-command "install.sh"'
-alias dcre='dcup --remove-existing-container'
-
-dcin() {
-  if [ $# -eq 0 ]; then
-    devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" zsh -il
-  else
-    devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" zsh -i -c "direnv exec . $* ; exec zsh -il"
-  fi
-}
-
-dcinw() {
-  echo -n "⏳ Waiting for container"
-  while ! devcontainer exec --workspace-folder "$DEVCONTAINER_PATH" true &> /dev/null; do
-    echo -n "."
-    sleep 2
-  done
-  echo -e "\n✅ Ready!"
-  dcin "$@"
-}
-
-alias dcrun='devcontainer exec --workspace-folder "$DEVCONTAINER_PATH"'
-alias dcrunw='echo -n "⏳ Waiting for container"; while ! dcrun true &> /dev/null; do echo -n "."; sleep 2; done; echo -e "\n✅ Ready!"; dcrun'
-
-alias gcloud_vpn='gcloud compute ssh instance-20260308-201926 --zone=europe-central2-c --project=gd-gcp-rnd-robotics'
-alias tailscale_up='sudo tailscale up --login-server http://127.0.0.1:18080'
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
