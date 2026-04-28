@@ -1,0 +1,82 @@
+unsetopt BEEP
+bindkey -v
+
+# Environment
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+
+# History
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+
+# Completion
+autoload -Uz compinit
+compinit
+
+autoload -Uz bashcompinit
+bashcompinit
+
+zstyle ':completion:*' menu select
+
+# Tool initialization
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
+
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+if [[ -f "$HOME/.zsh/fzf/key-bindings.zsh" ]]; then
+    source "$HOME/.zsh/fzf/key-bindings.zsh"
+    source "$HOME/.zsh/fzf/completion.zsh"
+fi
+
+# Modern tool aliases
+if command -v eza >/dev/null 2>&1; then
+    alias ls='eza --icons --git --group-directories-first'
+    alias ll='eza -al --icons --git --group-directories-first'
+    alias tree='eza --tree --icons'
+fi
+
+if command -v bat >/dev/null 2>&1; then
+    alias cat='bat --paging=never'
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    alias cd='z'
+fi
+
+# Autosuggestions
+if [[ -f "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+    source "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
+
+# Key bindings
+bindkey '^[[Z' reverse-menu-complete
+
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+bindkey '^[OA' history-beginning-search-backward
+bindkey '^[OB' history-beginning-search-forward
+bindkey -M vicmd 'k' history-beginning-search-backward
+bindkey -M vicmd 'j' history-beginning-search-forward
+
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+bindkey '^H' backward-kill-word
+bindkey '^[[3;5~' kill-word
+
+# Syntax highlighting stays last
+if [[ -f "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+    source "$HOME/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
