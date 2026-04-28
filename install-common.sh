@@ -142,7 +142,7 @@ install_neovim_host() {
   sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
   rm -rf ~/.config/nvim
   cp -r "$DOTFILES_DIR/nvim" ~/.config/nvim
-  nvim --headless "+Lazy! sync" +qa
+  /opt/nvim-linux-x86_64/bin/nvim --headless "+Lazy! sync" +qa
 }
 
 install_neovim_container() {
@@ -154,7 +154,7 @@ install_neovim_container() {
   sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
   rm -rf ~/.config/nvim
   cp -r "$DOTFILES_DIR/nvim" ~/.config/nvim
-  nvim --headless "+Lazy! sync" +qa
+  /opt/nvim-linux-x86_64/bin/nvim --headless "+Lazy! sync" +qa
 }
 
 setup_production_container() {
