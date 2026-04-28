@@ -95,8 +95,9 @@ setup_container_zsh() {
 
 install_starship_config() {
   echo "Configuring Starship..."
-  curl -sS https://starship.rs/install.sh | sh -s -- -y
-  eval "$(starship init zsh)"
+  mkdir -p "$HOME/.local/bin"
+  curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"
+  eval "$("$HOME/.local/bin/starship" init zsh)"
 
   rm -rf ~/.config/starship.toml
   cp "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
