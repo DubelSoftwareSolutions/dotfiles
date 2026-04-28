@@ -128,6 +128,12 @@ install_node() {
   nvm install 24
 }
 
+install_ai_cli_tools() {
+  echo "Installing AI CLI tools..."
+  npm i -g @openai/codex@latest
+  curl -fsSL https://claude.ai/install.sh | bash
+}
+
 install_uv_pynvim() {
   curl -LsSf https://astral.sh/uv/install.sh | sh
   export PATH="$HOME/.local/bin:$PATH"
@@ -182,5 +188,6 @@ setup_production_container() {
 setup_development_container() {
   setup_production_container
   install_node
+  install_ai_cli_tools
   install_neovim_container
 }
