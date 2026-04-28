@@ -130,8 +130,11 @@ install_node() {
 
 install_uv_pynvim() {
   curl -LsSf https://astral.sh/uv/install.sh | sh
-  source $HOME/.local/bin/env
-  uv tool install --upgrade pynvim
+  export PATH="$HOME/.local/bin:$PATH"
+  if [[ -f "$HOME/.local/bin/env" ]]; then
+    source "$HOME/.local/bin/env"
+  fi
+  "$HOME/.local/bin/uv" tool install --upgrade pynvim
 }
 
 sync_neovim_plugins() {
