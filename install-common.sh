@@ -116,6 +116,42 @@ install_kitty_host() {
   cp -r "$DOTFILES_DIR/kitty" ~/.config/kitty
 }
 
+install_mdfried() {
+  echo "Installing mdfried..."
+  require_sudo_apt
+
+  local deb_arch release_api deb_url deb_path
+  case "$(uname -m)" in
+    x86_64|amd64)
+      deb_arch="amd64"
+      ;;
+    aarch64|arm64)
+      deb_arch="arm64"
+      ;;
+    *)
+      print -u2 "mdfried install is only configured for amd64 and arm64."
+      return 1
+      ;;
+  esac
+
+  release_api="https://api.github.com/repos/benjajaja/mdfried/releases/latest"
+  deb_url="$(
+    curl -fsSL "$release_api" |
+      grep -o 'https://[^"]*\.deb' |
+      grep "${deb_arch}\.deb$" |
+      head -n 1
+  )"
+
+  if [[ -z "$deb_url" ]]; then
+    print -u2 "Failed to find a ${deb_arch} mdfried .deb in the latest GitHub release."
+    return 1
+  fi
+
+  deb_path="/tmp/mdfried_${deb_arch}.deb"
+  curl -fL -o "$deb_path" "$deb_url"
+  sudo apt install -y "$deb_path"
+}
+
 configure_fzf_current_shell() {
   echo "Configuring FZF..."
   source <(fzf --zsh)
@@ -183,6 +219,7 @@ setup_production_container() {
   setup_config_dir
   setup_container_zsh
   install_starship_config
+  install_mdfried
 }
 
 setup_development_container() {
