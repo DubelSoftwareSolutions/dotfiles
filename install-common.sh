@@ -133,6 +133,16 @@ install_uv_pynvim() {
   uv tool install --upgrade pynvim
 }
 
+sync_neovim_plugins() {
+  local nvim_bin="/opt/nvim-linux-x86_64/bin/nvim"
+
+  NVIM_DOTFILES_BOOTSTRAP=1 "$nvim_bin" --headless "+Lazy! sync" +qa
+  NVIM_DOTFILES_BOOTSTRAP=1 "$nvim_bin" --headless \
+    "+lua require('lazy').load({ plugins = { 'mason.nvim' } })" \
+    "+MasonInstall stylua shfmt clangd cmake-language-server pyright ruff" \
+    +qa
+}
+
 install_neovim_host() {
   echo "Linking Neovim..."
   install_uv_pynvim
@@ -140,9 +150,10 @@ install_neovim_host() {
   tar -tzf /tmp/nvim-linux-x86_64.tar.gz >/dev/null
   sudo rm -rf /opt/nvim-linux-x86_64
   sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
+  source $HOME/.local/bin/env
   rm -rf ~/.config/nvim
   cp -r "$DOTFILES_DIR/nvim" ~/.config/nvim
-  /opt/nvim-linux-x86_64/bin/nvim --headless "+Lazy! sync" +qa
+  sync_neovim_plugins
 }
 
 install_neovim_container() {
@@ -154,7 +165,7 @@ install_neovim_container() {
   sudo tar -C /opt -xzf /tmp/nvim-linux-x86_64.tar.gz
   rm -rf ~/.config/nvim
   cp -r "$DOTFILES_DIR/nvim" ~/.config/nvim
-  /opt/nvim-linux-x86_64/bin/nvim --headless "+Lazy! sync" +qa
+  sync_neovim_plugins
 }
 
 setup_production_container() {
