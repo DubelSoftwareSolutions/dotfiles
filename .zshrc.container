@@ -59,8 +59,6 @@ if [[ -f "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; th
     source "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
-
 # Key bindings
 bindkey '^[[Z' reverse-menu-complete
 
