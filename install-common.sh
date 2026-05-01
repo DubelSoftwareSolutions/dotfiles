@@ -81,6 +81,10 @@ install_fzf_shell_files() {
   curl -sS -o ~/.zsh/fzf/completion.zsh https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.zsh
 }
 
+configure_git_aliases() {
+  git config --global alias.commig commit
+}
+
 setup_host_zsh() {
   install_zsh_config "$DOTFILES_DIR/.zshrc" required
   install_zsh_plugins
@@ -219,6 +223,7 @@ setup_production_container() {
   setup_config_dir
   setup_container_zsh
   install_starship_config
+  configure_git_aliases
   install_mdfried
 }
 
