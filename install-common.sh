@@ -38,6 +38,8 @@ install_host_packages() {
     timg \
     ttyplot \
     xclip \
+    zathura \
+    zathura-pdf-poppler \
     zoxide \
     zsh
 }
@@ -118,6 +120,12 @@ install_kitty_host() {
   echo 'kitty.desktop' > ~/.config/xdg-terminals.list
   rm -rf ~/.config/kitty
   cp -r "$DOTFILES_DIR/kitty" ~/.config/kitty
+}
+
+install_zathura_config() {
+  echo "Configuring Zathura..."
+  rm -rf ~/.config/zathura
+  cp -r "$DOTFILES_DIR/zathura" ~/.config/zathura
 }
 
 install_mdfried() {
