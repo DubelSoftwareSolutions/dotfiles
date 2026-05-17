@@ -4,6 +4,8 @@ bindkey -v
 # Environment
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export TERM=xterm-kitty
+export COLORTERM=truecolor
 
 # History
 HISTSIZE=100000
