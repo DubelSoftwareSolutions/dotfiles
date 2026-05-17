@@ -11,6 +11,7 @@ setup_config_dir
 setup_host_zsh
 install_starship_config required
 install_kitty_host
+configure_git_kitty_difftool
 install_zathura_config
 install_mdfried
 configure_fzf_current_shell

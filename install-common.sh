@@ -87,6 +87,13 @@ configure_git_aliases() {
   git config --global alias.commig commit
 }
 
+configure_git_kitty_difftool() {
+  echo "Configuring Kitty Git difftool..."
+  git config --global diff.tool kitten
+  git config --global difftool.kitten.cmd 'kitten diff "$LOCAL" "$REMOTE"'
+  git config --global difftool.prompt false
+}
+
 setup_host_zsh() {
   install_zsh_config "$DOTFILES_DIR/.zshrc" required
   install_zsh_plugins
