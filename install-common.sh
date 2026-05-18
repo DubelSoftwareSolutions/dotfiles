@@ -92,6 +92,8 @@ configure_git_kitty_difftool() {
   git config --global diff.tool kitten
   git config --global difftool.kitten.cmd 'kitten diff "$LOCAL" "$REMOTE"'
   git config --global difftool.prompt false
+  git config --global alias.kdiff 'difftool --dir-diff --no-prompt'
+  git config --global alias.kdiff-file 'difftool --no-prompt'
 }
 
 setup_host_zsh() {
