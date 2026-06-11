@@ -191,6 +191,11 @@ install_ai_cli_tools() {
   curl -fsSL https://claude.ai/install.sh | bash
 }
 
+install_aider() {
+  echo "Installing Aider..."
+  curl -LsSf https://aider.chat/install.sh | sh
+}
+
 install_uv_pynvim() {
   curl -LsSf https://astral.sh/uv/install.sh | sh
   export PATH="$HOME/.local/bin:$PATH"

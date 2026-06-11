@@ -7,5 +7,6 @@ source "$DOTFILES_DIR/install-common.sh"
 echo "Bootstrapping production container dotfiles..."
 
 setup_production_container
+install_aider
 
 echo "Production container dotfiles installed."

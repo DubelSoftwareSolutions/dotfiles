@@ -7,5 +7,6 @@ source "$DOTFILES_DIR/install-common.sh"
 echo "Bootstrapping development container dotfiles..."
 
 setup_development_container
+install_aider
 
 echo "Development container dotfiles installed."

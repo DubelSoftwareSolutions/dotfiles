@@ -16,6 +16,7 @@ install_zathura_config
 install_mdfried
 configure_fzf_current_shell
 install_node
+install_aider
 install_neovim_host
 
 echo "Dotfiles installed."
