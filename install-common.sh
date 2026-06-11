@@ -194,6 +194,7 @@ install_ai_cli_tools() {
 install_aider() {
   echo "Installing Aider..."
   curl -LsSf https://aider.chat/install.sh | sh
+  cp "$DOTFILES_DIR/.aider.conf.yml" "$HOME/.aider.conf.yml"
 }
 
 install_uv_pynvim() {

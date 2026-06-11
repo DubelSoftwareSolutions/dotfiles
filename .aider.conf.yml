@@ -1,0 +1,15 @@
+dark-mode: true
+code-theme: gruvbox-dark
+
+auto-commits: false
+dirty-commits: false
+
+user-input-color: "#a9b665"
+assistant-output-color: "#7daea3"
+tool-output-color: "#d4be98"
+tool-error-color: "#ea6962"
+tool-warning-color: "#d8a657"
+completion-menu-color: "#d4be98"
+completion-menu-bg-color: "#1d2021"
+completion-menu-current-color: "#1d2021"
+completion-menu-current-bg-color: "#a9b665"
