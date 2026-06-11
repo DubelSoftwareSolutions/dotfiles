@@ -44,6 +44,48 @@ alias cat='bat --paging=never'
 alias cd='z'
 alias ssh='kitten ssh'
 
+# Devcontainer helpers
+function dcup() {
+    local target_path="${DEVCONTAINER_PATH:-.}"
+    local dotfiles_repo="https://github.com/DubelSoftwareSolutions/dotfiles.git"
+    local dotfiles_target="~/dotfiles"
+    local dotfiles_install="install-container-development.sh"
+
+    echo "🚀 Booting Devcontainer in $target_path (Injecting Dotfiles)..."
+
+    devcontainer up \
+        --workspace-folder "$target_path" \
+        --dotfiles-repository "$dotfiles_repo" \
+        --dotfiles-target-path "$dotfiles_target" \
+        --dotfiles-install-command "$dotfiles_install" \
+        "$@"
+}
+
+alias dcre='dcup --remove-existing-container'
+
+function dcin() {
+    local target_path="${DEVCONTAINER_PATH:-.}"
+    local quoted_cmd
+    if [ $# -eq 0 ]; then
+        echo "💻 Dropping into container shell..."
+        devcontainer exec --workspace-folder "$target_path" zsh -ic 'direnv allow 2>/dev/null; eval "$(direnv export zsh)"; exec zsh -i'
+    else
+        echo "💻 Executing inside container: $*"
+        quoted_cmd="${(j: :)${(q)@}}"
+        devcontainer exec --workspace-folder "$target_path" zsh -ic "direnv allow 2>/dev/null; eval \"\$(direnv export zsh)\"; ${quoted_cmd}; exec zsh -i"
+    fi
+}
+
+function dcinw() {
+    local target_path="${DEVCONTAINER_PATH:-.}"
+    echo "⏳ Waiting for Devcontainer to be ready..."
+    until devcontainer exec --workspace-folder "$target_path" echo "ready" > /dev/null 2>&1; do
+        sleep 2
+    done
+    echo "✅ Container is up!"
+    dcin "$@"
+}
+
 # Kitty and media aliases
 alias icat='kitty +kitten icat'
 alias tpdf='timg --grid=1x1 --title'
