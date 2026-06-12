@@ -7,6 +7,9 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export RCUTILS_COLORIZED_OUTPUT=1
 export ROS_DOMAIN_ID=21
 
+# ROS2 source
+source /opt/ros/humble/setup.zsh
+
 # History
 HISTSIZE=100000
 SAVEHIST=100000

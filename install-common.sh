@@ -118,8 +118,19 @@ install_starship_config() {
   cp "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
 }
 
+install_noto_colrv1_emoji_font() {
+  echo "Installing Noto COLRv1 emoji font..."
+  local font_dir="$HOME/.local/share/fonts/noto-emoji"
+
+  mkdir -p "$font_dir"
+  curl -fL -o "$font_dir/Noto-COLRv1.ttf" \
+    https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/Noto-COLRv1.ttf
+  fc-cache -f "$font_dir"
+}
+
 install_kitty_host() {
   echo "Configuring Kitty..."
+  install_noto_colrv1_emoji_font
   curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
   ln -sf ~/.local/kitty.app/bin/kitty ~/.local/kitty.app/bin/kitten ~/.local/bin/
   cp ~/.local/kitty.app/share/applications/kitty.desktop ~/.local/share/applications/

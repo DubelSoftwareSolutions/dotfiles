@@ -1,3 +1,5 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
 add_newline = true
 
 format = """
@@ -49,11 +51,13 @@ style = "bold blue"
 description = "Indicator for Host Machine"
 when = 'test ! -f /.dockerenv'
 format = '[🏠]($style) '
-style = "bold brown"
+style = "bold yellow"
 
 [custom.ros2]
+description = "Indicator for active ROS 2 environment"
 when = 'test -n "$COLCON_PREFIX_PATH"'
-command = 'echo $ROS_DISTRO'
+command = 'printf "%s" "$ROS_DISTRO"'
 symbol = "🐢 "
 format = '[$symbol$output]($style) '
 style = "bold blue"
+
