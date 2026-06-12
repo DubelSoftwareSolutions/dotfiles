@@ -108,6 +108,15 @@ setup_container_zsh() {
   install_fzf_shell_files
 }
 
+setup_container_ssh() {
+  mkdir -p ~/.ssh
+  chmod 700 ~/.ssh
+  ssh-keyscan github.com >> ~/.ssh/known_hosts 2>/dev/null
+  chmod 644 ~/.ssh/known_hosts
+  ssh-add -L | grep 'kdubel@griddynamics.com' > ~/.ssh/id_rsa.pub
+  chmod 644 ~/.ssh/id_rsa.pub
+}
+
 install_starship_config() {
   echo "Configuring Starship..."
   mkdir -p "$HOME/.local/bin"
@@ -256,6 +265,7 @@ setup_production_container() {
   install_container_production_packages
   setup_config_dir
   setup_container_zsh
+  setup_container_ssh
   install_starship_config
   configure_git_aliases
   install_mdfried
