@@ -209,6 +209,8 @@ install_ai_cli_tools() {
   echo "Installing AI CLI tools..."
   npm i -g @openai/codex@latest
   curl -fsSL https://claude.ai/install.sh | bash
+  claude plugin marketplace add griddynamics/rosetta
+  claude plugin install rosetta@rosetta
 }
 
 install_aider() {
