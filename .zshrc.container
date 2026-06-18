@@ -7,6 +7,9 @@ export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 export TERM=xterm-kitty
 export COLORTERM=truecolor
 
+# ROS2 source
+source /opt/ros/$ROS_DISTRO/setup.zsh
+
 # History
 HISTSIZE=100000
 SAVEHIST=100000
@@ -20,6 +23,9 @@ compinit
 
 autoload -Uz bashcompinit
 bashcompinit
+
+eval "$(register-python-argcomplete ros2)"
+eval "$(register-python-argcomplete colcon)"
 
 zstyle ':completion:*' menu select
 

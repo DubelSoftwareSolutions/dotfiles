@@ -8,7 +8,7 @@ export RCUTILS_COLORIZED_OUTPUT=1
 export ROS_DOMAIN_ID=21
 
 # ROS2 source
-source /opt/ros/humble/setup.zsh
+source /opt/ros/$ROS_DISTRO/setup.zsh
 
 # History
 HISTSIZE=100000
@@ -101,7 +101,7 @@ alias ccbp='colcon build --symlink-install --packages-select'
 alias ccclean='rm -rf build/ install/ log/'
 
 # ROS2 aliases
-alias ros2source='source /opt/ros/humble/setup.zsh'
+alias ros2source='source /opt/ros/$ROS_DISTRO/setup.zsh'
 alias r2s='ros2source'
 alias r2tl='ros2 topic list'
 alias r2ti='ros2 topic info'
