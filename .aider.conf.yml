@@ -4,6 +4,7 @@ code-theme: gruvbox-dark
 auto-commits: false
 dirty-commits: false
 subtree-only: true
+edit-format: ask
 
 user-input-color: "#a9b665"
 assistant-output-color: "#7daea3"
