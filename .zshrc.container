@@ -14,7 +14,7 @@ source /opt/ros/$ROS_DISTRO/setup.zsh
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
-setopt SHARE_HISTORY
+unsetopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 
 # Completion

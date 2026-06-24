@@ -4,6 +4,7 @@ bindkey -v
 # Environment
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$PATH:/usr/local/cuda/bin"
 export RCUTILS_COLORIZED_OUTPUT=1
 export ROS_DOMAIN_ID=21
 
@@ -14,7 +15,7 @@ source /opt/ros/$ROS_DISTRO/setup.zsh
 HISTSIZE=100000
 SAVEHIST=100000
 HISTFILE=~/.zsh_history
-setopt SHARE_HISTORY
+unsetopt SHARE_HISTORY
 setopt HIST_IGNORE_DUPS
 
 # Completion
