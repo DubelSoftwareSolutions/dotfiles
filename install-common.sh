@@ -234,7 +234,7 @@ sync_neovim_plugins() {
   NVIM_DOTFILES_BOOTSTRAP=1 "$nvim_bin" --headless "+Lazy! sync" +qa
   NVIM_DOTFILES_BOOTSTRAP=1 "$nvim_bin" --headless \
     "+lua require('lazy').load({ plugins = { 'mason.nvim' } })" \
-    "+MasonInstall stylua shfmt clangd cmake-language-server pyright ruff" \
+    "+MasonInstall stylua shfmt clang-format clangd cmake-language-server pyright ruff" \
     +qa
 }
 

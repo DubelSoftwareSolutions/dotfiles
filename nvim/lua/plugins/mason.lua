@@ -1,4 +1,5 @@
 local tools = {
+  "clang-format",
   "clangd",
   "cmake-language-server",
   "pyright",
