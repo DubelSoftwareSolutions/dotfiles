@@ -6,34 +6,18 @@ return {
         timeout = 8000,
       },
       views = {
-        split = {
-          enter = true,
-        },
-      },
-      routes = {
-        {
-          filter = {
-            event = "notify",
-            min_level = vim.log.levels.WARN,
+        mini = {
+          win_options = {
+            winblend = 0,
           },
-          view = "split",
-        },
-        {
-          filter = {
-            event = "notify",
+          size = {
+            width = 60,
           },
-          view = "split",
         },
       },
     },
     keys = {
-      {
-        "<leader>sn",
-        function()
-          require("noice").cmd("history")
-        end,
-        desc = "Notification History (Noice)",
-      },
+      { "<leader>n", "<cmd>Noice telescope<cr>", desc = "Noice Log" },
     },
   },
 }
