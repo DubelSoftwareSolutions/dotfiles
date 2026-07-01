@@ -55,6 +55,7 @@ install_container_production_packages() {
     bat \
     eza \
     kitty-terminfo \
+    xclip \
     zoxide \
     direnv
 }
