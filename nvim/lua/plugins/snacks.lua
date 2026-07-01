@@ -1,10 +1,10 @@
 return {
-  {
-    "folke/snacks.nvim",
-    opts = {
-      explorer = {
-        confirm = "rm",
-      },
-    },
-  },
+	{
+		"folke/snacks.nvim",
+		opts = {
+			explorer = {
+				trash = false,
+			},
+		},
+	},
 }
