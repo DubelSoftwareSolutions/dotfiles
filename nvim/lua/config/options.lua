@@ -4,3 +4,4 @@ vim.g.ai_cmp = false
 vim.opt.number = true
 vim.opt.relativenumber = false
 vim.opt.termguicolors = true
+vim.opt.wrap = false
