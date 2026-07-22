@@ -44,6 +44,74 @@ install_host_packages() {
     zsh
 }
 
+require_pacman() {
+  if ! command -v sudo >/dev/null 2>&1; then
+    print -u2 "sudo is required to install pacman packages."
+    return 1
+  fi
+
+  if ! command -v pacman >/dev/null 2>&1; then
+    print -u2 "pacman is required; only Arch/CachyOS hosts are supported."
+    return 1
+  fi
+}
+
+pacman_install_packages() {
+  require_pacman
+  sudo pacman -Syu --needed --noconfirm "$@"
+}
+
+require_paru() {
+  if command -v paru >/dev/null 2>&1; then
+    return 0
+  fi
+
+  echo "Bootstrapping paru (AUR helper)..."
+  require_pacman
+  sudo pacman -S --needed --noconfirm base-devel git
+
+  local paru_build_dir="/tmp/paru-build"
+  rm -rf "$paru_build_dir"
+  git clone https://aur.archlinux.org/paru.git "$paru_build_dir"
+  (cd "$paru_build_dir" && makepkg -si --noconfirm)
+  rm -rf "$paru_build_dir"
+
+  if ! command -v paru >/dev/null 2>&1; then
+    print -u2 "paru installation failed."
+    return 1
+  fi
+}
+
+aur_install_packages() {
+  require_paru
+  paru -Syu --needed --noconfirm "$@"
+}
+
+install_host_packages_cachyos() {
+  pacman_install_packages \
+    bat \
+    btop \
+    bubblewrap \
+    curl \
+    direnv \
+    eza \
+    fd \
+    fzf \
+    mdfried \
+    python-argcomplete \
+    ripgrep \
+    xclip \
+    zathura \
+    zathura-pdf-poppler \
+    zoxide \
+    zsh
+
+  aur_install_packages \
+    python-colcon-common-extensions \
+    timg \
+    ttyplot
+}
+
 install_container_production_packages() {
   apt_install_packages \
     zsh \
