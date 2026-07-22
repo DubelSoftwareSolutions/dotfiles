@@ -107,7 +107,6 @@ install_host_packages_cachyos() {
     zsh
 
   aur_install_packages \
-    python-colcon-common-extensions \
     timg \
     ttyplot
 }
