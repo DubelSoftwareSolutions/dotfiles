@@ -1,9 +1,10 @@
 local tools = {
+  "black",
   "clang-format",
   "clangd",
   "cmake-language-server",
+  "isort",
   "pyright",
-  "ruff",
 }
 
 return {
