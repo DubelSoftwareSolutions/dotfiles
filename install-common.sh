@@ -353,6 +353,7 @@ setup_production_container() {
 
 setup_development_container() {
   setup_production_container
+  install_glow
   install_node
   install_ai_cli_tools
   install_neovim_container
