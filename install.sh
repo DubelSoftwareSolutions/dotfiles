@@ -14,6 +14,7 @@ install_kitty_host
 configure_git_kitty_difftool
 install_zathura_config
 install_mdfried
+install_glow
 configure_fzf_current_shell
 install_node
 install_aider

@@ -97,6 +97,7 @@ install_host_packages_cachyos() {
     eza \
     fd \
     fzf \
+    glow \
     mdfried \
     python-argcomplete \
     ripgrep \
@@ -225,8 +226,9 @@ install_zathura_config() {
   cp -r "$DOTFILES_DIR/zathura" ~/.config/zathura
 }
 
-install_mdfried() {
-  echo "Installing mdfried..."
+install_github_deb() {
+  local repo="$1" name="$2"
+  echo "Installing ${name}..."
   require_sudo_apt
 
   local deb_arch release_api deb_url deb_path
@@ -238,12 +240,12 @@ install_mdfried() {
       deb_arch="arm64"
       ;;
     *)
-      print -u2 "mdfried install is only configured for amd64 and arm64."
+      print -u2 "${name} install is only configured for amd64 and arm64."
       return 1
       ;;
   esac
 
-  release_api="https://api.github.com/repos/benjajaja/mdfried/releases/latest"
+  release_api="https://api.github.com/repos/${repo}/releases/latest"
   deb_url="$(
     curl -fsSL "$release_api" |
       grep -o 'https://[^"]*\.deb' |
@@ -252,13 +254,21 @@ install_mdfried() {
   )"
 
   if [[ -z "$deb_url" ]]; then
-    print -u2 "Failed to find a ${deb_arch} mdfried .deb in the latest GitHub release."
+    print -u2 "Failed to find a ${deb_arch} ${name} .deb in the latest GitHub release."
     return 1
   fi
 
-  deb_path="/tmp/mdfried_${deb_arch}.deb"
+  deb_path="/tmp/${name}_${deb_arch}.deb"
   curl -fL -o "$deb_path" "$deb_url"
   sudo apt install -y "$deb_path"
+}
+
+install_mdfried() {
+  install_github_deb benjajaja/mdfried mdfried
+}
+
+install_glow() {
+  install_github_deb charmbracelet/glow glow
 }
 
 configure_fzf_current_shell() {
