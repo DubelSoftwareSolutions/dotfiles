@@ -52,7 +52,36 @@ if command -v eza >/dev/null 2>&1; then
     alias ls='eza --icons --git --group-directories-first'
     alias ll='eza -al --icons --git --group-directories-first'
     alias tree='eza --tree --icons'
-    alias gtree='eza --tree --icons --git --git-ignore -a'
+fi
+
+if command -v /usr/bin/tree >/dev/null 2>&1; then
+    function gtree() {
+        local colorize='s/\[M\]/\x1b[33m[M]\x1b[0m/; s/\[A\]/\x1b[32m[A]\x1b[0m/; s/\[D\]/\x1b[31m[D]\x1b[0m/; s/\[R\]/\x1b[36m[R]\x1b[0m/'
+        local staged unstaged
+        staged=$(git status --porcelain=v1 | awk '{
+            idx = substr($0, 1, 1); path = substr($0, 4)
+            sub(/.* -> /, "", path)
+            if (idx == " " || idx == "?") next
+            print path " [" idx "]"
+        }')
+        unstaged=$(git status --porcelain=v1 | awk '{
+            idx = substr($0, 1, 1); wt = substr($0, 2, 1); path = substr($0, 4)
+            sub(/.* -> /, "", path)
+            if (idx == "?" && wt == "?") { print path " [A]"; next }
+            if (wt == " ") next
+            print path " [" wt "]"
+        }')
+
+        if [[ -n "$staged" ]]; then
+            echo -e "\x1b[1mStaged:\x1b[0m"
+            echo "$staged" | /usr/bin/tree --fromfile --noreport -C | sed -E "$colorize"
+            echo
+        fi
+        if [[ -n "$unstaged" ]]; then
+            echo -e "\x1b[1mUnstaged:\x1b[0m"
+            echo "$unstaged" | /usr/bin/tree --fromfile --noreport -C | sed -E "$colorize"
+        fi
+    }
 fi
 
 if command -v bat >/dev/null 2>&1; then

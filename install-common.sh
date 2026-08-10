@@ -36,6 +36,7 @@ install_host_packages() {
     python3-colcon-common-extensions \
     ripgrep \
     timg \
+    tree \
     ttyplot \
     xclip \
     zathura \
