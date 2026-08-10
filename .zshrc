@@ -44,6 +44,7 @@ fi
 alias ls='eza --icons --git --group-directories-first'
 alias ll='eza -al --icons --git --group-directories-first'
 alias tree='eza --tree --icons'
+alias gtree='eza --tree --icons --git --git-ignore -a'
 alias cat='bat --paging=never'
 alias cd='z'
 alias ssh='kitten ssh'
