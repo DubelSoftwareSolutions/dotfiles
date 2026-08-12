@@ -104,12 +104,31 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 # Key bindings
 bindkey '^[[Z' reverse-menu-complete
 
-bindkey '^[[A' history-beginning-search-backward
-bindkey '^[[B' history-beginning-search-forward
-bindkey '^[OA' history-beginning-search-backward
-bindkey '^[OB' history-beginning-search-forward
-bindkey -M vicmd 'k' history-beginning-search-backward
-bindkey -M vicmd 'j' history-beginning-search-forward
+up-line-or-beginning-search() {
+    if [[ $LBUFFER == *$'\n'* ]]; then
+        zle up-line-or-history
+    else
+        zle history-beginning-search-backward
+    fi
+}
+zle -N up-line-or-beginning-search
+
+down-line-or-beginning-search() {
+    if [[ $RBUFFER == *$'\n'* ]]; then
+        zle down-line-or-history
+    else
+        zle history-beginning-search-forward
+    fi
+}
+zle -N down-line-or-beginning-search
+
+bindkey -M vicmd 'k' up-line-or-beginning-search
+bindkey -M vicmd 'j' down-line-or-beginning-search
+
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+bindkey '^[OA' up-line-or-beginning-search
+bindkey '^[OB' down-line-or-beginning-search
 
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
