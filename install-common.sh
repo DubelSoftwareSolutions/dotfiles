@@ -32,6 +32,9 @@ install_host_packages() {
     eza \
     fd-find \
     fzf \
+    inotify-tools \
+    pandoc \
+    poppler-utils \
     python3-argcomplete \
     python3-colcon-common-extensions \
     ripgrep \
@@ -98,13 +101,17 @@ install_host_packages_cachyos() {
     eza \
     fd \
     fzf \
+    inotify-tools \
+    pandoc \
+    poppler \
     glow \
     mdfried \
     python-argcomplete \
     ripgrep \
+    typst \
     xclip \
     zathura \
-    zathura-pdf-poppler \
+    zathura-pdf-mupdf \
     zoxide \
     zsh
 
