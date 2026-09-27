@@ -1,0 +1,5 @@
+{
+  // MD013: line-length. Disabled — prose gets wrapped/edited freely without
+  // triggering warnings for long lines.
+  "MD013": false
+}
