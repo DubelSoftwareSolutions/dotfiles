@@ -4,6 +4,9 @@ if [[ -z "${DOTFILES_DIR:-}" ]]; then
   DOTFILES_DIR="${0:A:h}"
 fi
 
+# Installers (claude, uv, aider, starship) drop binaries here; make them callable later in this run.
+export PATH="$HOME/.local/bin:$PATH"
+
 require_sudo_apt() {
   if ! command -v sudo >/dev/null 2>&1; then
     print -u2 "sudo is required to install apt packages."
@@ -307,7 +310,6 @@ install_aider() {
 
 install_uv_pynvim() {
   curl -LsSf https://astral.sh/uv/install.sh | sh
-  export PATH="$HOME/.local/bin:$PATH"
   if [[ -f "$HOME/.local/bin/env" ]]; then
     source "$HOME/.local/bin/env"
   fi
@@ -363,6 +365,6 @@ setup_development_container() {
   setup_production_container
   install_glow
   install_node
-  install_ai_cli_tools
   install_neovim_container
+  install_ai_cli_tools
 }
